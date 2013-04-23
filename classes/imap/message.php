@@ -540,11 +540,11 @@ class Imap_Message
 		$parameters = array();
 		if (isset($structure->parameters))
 			foreach ($structure->parameters as $parameter)
-				$parameters[$parameter->attribute] = $parameter->value;
+				$parameters[strtolower($parameter->attribute)] = $parameter->value;
 
 		if (isset($structure->dparameters))
 			foreach ($structure->dparameters as $parameter)
-				$parameters[$parameter->attribute] = $parameter->value;
+				$parameters[strtolower($parameter->attribute)] = $parameter->value;
 
 		return $parameters;
 	}
