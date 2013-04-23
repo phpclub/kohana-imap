@@ -366,6 +366,18 @@ class Imap
 	{
 		return imap_expunge($this->get_imap_stream());
 	}
+
+	/**
+	 * Read the list of mailboxes
+	 *
+	 * @param NULL|string $pattern Specifies where in the mailbox hierarchy to start searching
+	 * @return array
+	 */
+	public function listmailbox($pattern = '*')
+	{
+		return imap_list($this->get_imap_stream(), '{'.$this->server_path.'}', $pattern);
+	}
+
 }
 
 /**
