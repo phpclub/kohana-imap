@@ -224,7 +224,7 @@ class Imap_Message
 			$results = imap_fetch_overview($this->imap_stream, $this->uid, FT_UID);
 			$this->message_overview = array_shift($results);
 		}
-		
+
 		return $this->message_overview;
 	}
 
@@ -268,7 +268,7 @@ class Imap_Message
 		{
 			$this->structure = imap_fetchstructure($this->imap_stream, $this->uid, FT_UID);
 		}
-		
+
 		return $this->structure;
 	}
 
@@ -308,7 +308,7 @@ class Imap_Message
 				return $this->plaintext_message;
 			}
 		}
-		
+
 		return FALSE;
 	}
 
@@ -348,7 +348,7 @@ class Imap_Message
 								  $address['name'] . ' <' . $address['address'] . '>'
 								: $address['address'];
 			}
-			
+
 			return $output_string;
 		}
 	}
@@ -419,8 +419,18 @@ class Imap_Message
 
 			$message_body = self::decode($message_body, $structure->encoding);
 
-			if ($parameters['charset'] !== self::$charset)
-				$message_body = iconv($parameters['charset'], self::$charset, $message_body);
+			if (isset($parameters['charset']) AND $parameters['charset'] !== self::$charset)
+			{
+				$current_charset = strtolower(self::$charset);
+
+				if (strtolower($parameters['charset']) == 'us-ascii'
+					AND ! (strpos($current_charset, 'utf-8') === 0
+						OR strpos($current_charset, 'iso-8859-1') === 0)
+					)
+				{
+					$message_body = iconv($parameters['charset'], self::$charset, $message_body);
+				}
+			}
 
 			if (strtolower($structure->subtype) == 'plain' or $structure->type == 1)
 			{
@@ -568,7 +578,7 @@ class Imap_Message
 				$current_address['name'] = $address->personal;
 			$output_addresses[] = $current_address;
 		}
-		
+
 		return $output_addresses;
 	}
 
@@ -604,7 +614,7 @@ class Imap_Message
 				$results[] = $attachment;
 		}
 
-		switch (count($results)) 
+		switch (count($results))
 		{
 			case 0:
 				return FALSE;
