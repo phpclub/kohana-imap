@@ -1,0 +1,25 @@
+{
+  "name": "alle/kohana-imap",
+  "type": "kohana-module",
+  "description": "An IMAP client for Kohana 3.x",
+  "homepage": "https://github.com/alle/kohana-imap",
+  "license": "BSD-3-Clause",
+  "keywords":["kohana", "email", "imap"],
+  "authors": [
+    {
+      "name": "Michael Lavers",
+      "email": "kolanos@gmail.com",
+      "homepage": "https://github.com/kolanos",
+      "role": "Author"
+    },
+    {
+      "name": "Alessandro Frangioni",
+      "email": "alesandro.frangioni@gmail.com",
+      "homepage": "https://github.com/alle",
+      "role": "Author"
+    }
+  ],
+  "require": {
+    "kohana/core"       : "3.3.*"
+  }
+}
